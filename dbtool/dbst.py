@@ -20,6 +20,7 @@ def querydb(query="SELECT * FROM default.diamonds LIMIT 2"):
             result = cursor.fetchall()
 
     return result
+
 def checkData(code):
     return querydb("SELECT * FROM money where code=\"{code}\"".format(code=code))
 

@@ -9,3 +9,4 @@ databricks-connect==10.4.*
 databricks
 databricks-cli
 uvicorn
+pytest
