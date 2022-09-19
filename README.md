@@ -40,7 +40,8 @@ Commands:
   cli-query    Query record based on code
 ```
  
-
+### Demo video
+[demo](https://ypve0vm4k0.feishu.cn/minutes/obcnihw2t945nlalry783595)
 
 
 ## Design
