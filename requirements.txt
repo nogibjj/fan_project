@@ -1,8 +1,8 @@
-boto3
 pylint
 click
 pytest
 pytest-cov
 fastapi
-requests
 black
+databricks-sql-connector
+databricks-connect==10.4.*

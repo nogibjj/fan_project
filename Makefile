@@ -2,9 +2,6 @@ install:
 	pip install --upgrade pip &&\
 		pip install -r requirements.txt
 
-test:
-	python -m pytest -vv test_*.py
-
 format:	
 	black *.py
 
@@ -13,4 +10,4 @@ lint:
 
 refactor: format lint
 
-all: install lint test
+all: install lint
