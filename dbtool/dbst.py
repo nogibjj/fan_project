@@ -6,7 +6,6 @@ def beautify(res):
     for _, name, target, amt  in res:
         s.append(name + " pay " + target + " " + str(amt))
     return s
-    
 
 def querydb(query="SELECT * FROM default.diamonds LIMIT 2"):
     with sql.connect(
