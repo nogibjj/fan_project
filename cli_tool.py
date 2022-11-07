@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 import click
-from dbtool.dbst import querydb, checkData, beautify
+from dbtool.dbst import querydb, checkData
+from dbtool.others import beautify
 
 @click.group()
 def cli():

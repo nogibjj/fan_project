@@ -10,3 +10,5 @@ databricks
 databricks-cli
 uvicorn
 pytest
+DBUtils
+pymysql
