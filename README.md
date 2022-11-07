@@ -18,13 +18,15 @@ Hope this microservice will save my time lol.
 - `/open`
   open new burget for calcuation, get the hashcode for payment.
   
-- `/pay/{hashcode}/{your name}/{other's name}/{money}` 
+- `/pay/{hashcode}/{your name}/{other's name}/{money}/{item}` 
   record the payment from you for others (If it works for all members please use "all") in the burget, which identified by hashcode
   If you pay the bill and you can clear the bill used this API. 
   
 - `/cal/{hashcode}`
   Do calculation for you and show the result.
 
+- `/delete/{hashcode}/{item index}`
+  Delete one entry in record
 
 ### CI/CD
 ```shell
@@ -41,7 +43,12 @@ Commands:
 ```
  
 ### Demo video
+
+project1
+
+
 [demo](https://ypve0vm4k0.feishu.cn/minutes/obcnihw2t945nlalry783595)
+
 
 
 ## Design
@@ -72,6 +79,8 @@ fan_project1
 ```
 
 ## Dataset
+
+### Databricks
 `default.diamonds`  
 Default databricks dataset in Azure for testing connection. 
 
@@ -83,6 +92,8 @@ Schema:
 
  <img src="https://user-images.githubusercontent.com/26620662/190969290-4b5d1d3f-a89c-488e-ae87-35b50ee810cf.png" width = "300" height = "200" align=center />
 
+
+### MySQL
 
 
 ## What's Next
