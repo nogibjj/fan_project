@@ -1,6 +1,7 @@
 install:
 	pip install --upgrade pip &&\
 		pip install -r requirements.txt
+	sudo apt-get update
 	sudo apt-get install -y docker.io
 	sudo service docker start
 	sudo chmod 666 /var/run/docker.sock
