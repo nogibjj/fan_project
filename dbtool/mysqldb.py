@@ -7,15 +7,15 @@ import pymysql
 
 MYSQL_CONN_POOL = PooledDB(
     creator=pymysql,
-    maxconnections = 1000,
-    mincached = 100,
-    blocking = True,
-    host = os.getenv("MYSQL_HOST"),
-    port = 3306,
-    user = os.getenv("MYSQL_USER"),
-    password = os.getenv("MYSQL_PWD"),
-    database = os.getenv("MYSQL_DATABASE"),
-    ssl_ca = "dbtool/CA.pem",
+    maxconnections=1000,
+    mincached=100,
+    blocking=True,
+    host=os.getenv("MYSQL_HOST"),
+    port=3306,
+    user=os.getenv("MYSQL_USER"),
+    password=os.getenv("MYSQL_PWD"),
+    database=os.getenv("MYSQL_DATABASE"),
+    ssl_ca="dbtool/CA.pem",
 )
 
 
@@ -26,9 +26,11 @@ def tableInit():
     """
     conn = MYSQL_CONN_POOL.connection()
     cursor = conn.cursor()
-    cursor.execute(\
+    cursor.execute(
         "CREATE TABLE IF NOT EXISTS MONEY\
-        (code varchar(8), idx INT UNSIGNED, payer text not null, target text not null, item text, amount decimal(8, 2))")
+        (code varchar(8), idx INT UNSIGNED, payer text not null, target text not null, item text, amount decimal(8, 2))"
+    )
+
 
 def insertData(code, payer, target, amount, item):
     cur = checkData(code)
@@ -37,24 +39,22 @@ def insertData(code, payer, target, amount, item):
     conn = MYSQL_CONN_POOL.connection()
     cursor = conn.cursor()
     cursor.execute(
-        'INSERT INTO money (code, idx, payer, target, item, amount) VALUES (%s, %s, %s, %s, %s, %s)',
-        (code, index, payer, target, item, amount)
+        "INSERT INTO money (code, idx, payer, target, item, amount) VALUES (%s, %s, %s, %s, %s, %s)",
+        (code, index, payer, target, item, amount),
     )
     conn.commit()
+
 
 def checkData(code):
     conn = MYSQL_CONN_POOL.connection()
     cursor = conn.cursor()
-    cursor.execute(
-        'SELECT * FROM MONEY WHERE code=%s', code
-    )
+    cursor.execute("SELECT * FROM MONEY WHERE code=%s", code)
     res = cursor.fetchall()
     return res
+
 
 def deleteData(code, index):
     conn = MYSQL_CONN_POOL.connection()
     cursor = conn.cursor()
-    cursor.execute(
-        'DELETE FROM MONEY WHERE code=%s AND idx=%s', (code, index)
-    )
+    cursor.execute("DELETE FROM MONEY WHERE code=%s AND idx=%s", (code, index))
     conn.commit()
