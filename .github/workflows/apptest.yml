@@ -32,9 +32,9 @@ jobs:
     - name: Format code
       run: |
         make format
-    - name: Build container
-      run: |
-        docker build -t split-money .
+#     - name: Build container
+#       run: |
+#         docker build -t split-money .
     - name: Run app
       run: |
         python app.py
