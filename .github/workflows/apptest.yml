@@ -32,14 +32,6 @@ jobs:
     - name: Format code
       run: |
         make format
-#     - name: Build container
-#       run: |
-#         docker build -t split-money .
-    - name: Run app
+    - name: Build container
       run: |
-        python app.py
-        # docker run -e MYSQL_HOST=$MYSQL_HOST \
-        # -e MYSQL_USER=$MYSQL_USER \
-        # -e MYSQL_PWD=$MYSQL_PWD \
-        # -e MYSQL_DATABASE=$MYSQL_DATABASE \
-        # split-money 
+        docker build -t split-money .
