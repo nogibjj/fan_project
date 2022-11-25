@@ -1,10 +1,10 @@
 from fastapi import FastAPI
+from fastapi.responses import JSONResponse, FileResponse
 from dbtool.mysqldb import tableInit, insertData, deleteData, checkData
-from dbtool.others import beautify
-from decimal import Decimal
-from collections import defaultdict
+from dbtool.others import beautify, calculateRel, deleteFileRegex
 import uvicorn
 import uuid
+import csv
 
 
 tableInit()
@@ -23,15 +23,16 @@ async def query(code: str):
     return {"code": code, "record": beautify(result)}
 
 
-@app.get("/open")
-async def openAPI():
+@app.get("/open/{password}")
+async def openAPI(password: str):
+    print(password)
     res = str(uuid.uuid1())[:8]
     while len(checkData(res)) != 0:
         res = str(uuid.uuid1())[:8]
     return res
 
 
-@app.get("/delete/{code}/{index}")
+@app.post("/delete/{code}/{index}")
 async def delete(code, index):
     deleteData(code, index)
     result = checkData(code)
@@ -47,43 +48,42 @@ async def pay(code, name, target, amount, item):
 
 @app.get("/cal/{code}")
 async def cal(code):
-    h = defaultdict(int)
     result = checkData(code)
-    total = 0
-    for code, _, name, target, _, amt in result:
-        if target != "all":
-            target = target.split(",")
-            for t in target:
-                h[t.strip()] += amt / Decimal(len(target))
-        else:
-            total += amt
-        h[name] -= amt
-    for k, val in h.items():
-        h[k] += total / Decimal(len(h))
+    cal_rels = calculateRel(result)
     calres = []
-    cur = [[v, k] for k, v in h.items()]
-    cur.sort()
-    left, right = 0, len(cur) - 1
-    calres = []
-    while left < right:
-        if cur[left][0] == 0:
-            left += 1
-        elif cur[right][0] == 0:
-            right -= 1
-        else:
-            val = min(abs(cur[left][0]), abs(cur[right][0]))
-            cur[left][0] += val
-            cur[right][0] -= val
-            calres.append(
-                "{A} needs to pay {B} amount: {amt}".format(
-                    A=cur[right][1], B=cur[left][1], amt=abs(val)
-                )
-            )
+    for payer, target, amt in cal_rels:
+        calres.append(
+            "{A} needs to pay {B} amount: {amt}".format(A=payer, B=target, amt=amt)
+        )
+
     return {
         "code": code,
         "result": "; ".join(calres) if calres else "Nobody needs to pay",
         "record": beautify(result),
     }
+
+
+@app.post("/download/{code}")
+async def download(code: str):
+    data = checkData(code)
+    if len(data) == 0:
+        return JSONResponse(content="NO DATA", status_code=403)
+    deleteFileRegex(code, "static/")
+    filepath = "static/" + str(uuid.uuid1()) + "_" + code + ".csv"
+    calres = calculateRel(data)
+    with open(filepath, "w", encoding="utf-8") as f:
+        header = ["item", "payer", "users", "money"]
+        writer = csv.writer(f)
+        writer.writerow(header)
+        for _, _, name, target, item, amt in data:
+            writer.writerow([item, name, target, amt])
+        writer.writerow("")
+        writer.writerow(["PAY RELATIONSHIP"])
+        writer.writerow(["Sender", "Receiver", "Money"])
+        for sender, receiver, money in calres:
+            writer.writerow([sender, receiver, money])
+
+    return FileResponse(filepath, filename="{code}.csv".format(code=code))
 
 
 if __name__ == "__main__":
