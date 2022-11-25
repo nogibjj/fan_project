@@ -2,6 +2,13 @@ name: app auto-test with Github Action
 
 on: [push]
 
+env:
+  MYSQL_HOST: ${{ secrets.MYSQL_HOST }}
+  MYSQL_USER: ${{ secrets.MYSQL_USER }}
+  MYSQL_PWD: ${{ secrets.MYSQL_PWD }}
+  MYSQL_DATABASE: ${{ secrets.MYSQL_DATABASE }}
+
+
 jobs:
   build:
 
@@ -30,8 +37,9 @@ jobs:
         docker build -t split-money .
     - name: Run app
       run: |
-        docker run -e MYSQL_HOST=$MYSQL_HOST \
-        -e MYSQL_USER=$MYSQL_USER \
-        -e MYSQL_PWD=$MYSQL_PWD \
-        -e MYSQL_DATABASE=$MYSQL_DATABASE \
-        split-money 
+        python app.py
+        # docker run -e MYSQL_HOST=$MYSQL_HOST \
+        # -e MYSQL_USER=$MYSQL_USER \
+        # -e MYSQL_PWD=$MYSQL_PWD \
+        # -e MYSQL_DATABASE=$MYSQL_DATABASE \
+        # split-money 
