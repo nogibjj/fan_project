@@ -25,11 +25,10 @@ jobs:
     - name: Format code
       run: |
         make format
-    - name: Build app 
+    - name: Build container
       run: |
-	      docker build -t split-money .
+        docker build -t split-money .
     - name: Run app
-
       run: |
         docker run -e MYSQL_HOST=$MYSQL_HOST \
         -e MYSQL_USER=$MYSQL_USER \
