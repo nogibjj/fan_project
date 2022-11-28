@@ -11,6 +11,7 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
 RUN mkdir -p /app
 COPY  . /app/
 WORKDIR /app 
+EXPOSE 8000
 RUN pip install -r requirements.txt
 ENTRYPOINT ["python"]
 CMD ["app.py"]
