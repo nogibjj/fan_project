@@ -28,7 +28,19 @@ Hope this microservice will save my time lol.
 - `/delete/{hashcode}/{item index}`
   Delete one entry in record
 
+- `/download/{hashcode}/`
+  Download the csv report for spliting money
+
 ### CI/CD
+
+CI/CD is supported by AWS ECR and automatically deployed on AWS APP RUNNER
+
+```shell
+// Execute CI/CD with the command
+make deploy
+```
+
+### CLI TOOL
 ```shell
 Usage: cli_tool.py [OPTIONS] COMMAND [ARGS]...
 
