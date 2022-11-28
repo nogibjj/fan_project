@@ -1,0 +1,7 @@
+item,payer,users,money
+food,yifan,"yifan,panyan",100.00
+drink,panyan,"yifan,panyan",68.00
+
+PAY RELATIONSHIP
+Sender,Receiver,Money
+panyan,yifan,16.00
