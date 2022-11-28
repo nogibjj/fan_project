@@ -16,6 +16,7 @@ build:
 	docker build -t split-money .
 
 deploy:
+	pip install awscli --upgrade --user
 	aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 844619079882.dkr.ecr.us-east-1.amazonaws.com
 	docker build -t sm .
 	docker tag sm:latest 844619079882.dkr.ecr.us-east-1.amazonaws.com/sm:latest
