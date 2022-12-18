@@ -3,7 +3,7 @@
 
 # Split-Money🤔
 
-## Intro
+## Introduction
 Do you feel annoyed with calculation work after having fun with friends? For example, you went to skiing with friends. You paid the fee for skiing, but Tom rent the car and Jen took charge in food burget. After the joyful time, you and friends have to sit down, calculate the total fee and figure out if there is extra money you should pay. 
 
 Although they are simple calculation tasks just using Plus or Minus, but when all of friends contribute to the team burget and the calculationn work accummulating, it is so tired to do such work. 
